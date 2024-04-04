@@ -49,7 +49,7 @@ const AddRoom = () => {
       }
     } catch (error) {
       setErrorMessage(error.message);
-    } 
+    }
     setTimeout(() => {
       setSuccessMessage("")
       setErrorMessage("")
@@ -65,22 +65,22 @@ const AddRoom = () => {
           {successMessage && (
             <div className='alert alert-success fade show'>{successMessage}</div>
           )}
-           {errorMessage && (
+          {errorMessage && (
             <div className='alert alert-danger fade show'>{errorMessage}</div>
           )}
-        
+
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
               <label htmlFor="roomType" className="form-label">
                 Room Type</label>
             </div>
             <div>
-            <RoomTypeSelector 
-              // newRoom={newRoom.roomType} 
-              handleRoomInputChange={handleRoomInputChange} 
-              newRoom={newRoom}
-  
-            />
+              <RoomTypeSelector
+                // newRoom={newRoom.roomType} 
+                handleRoomInputChange={handleRoomInputChange}
+                newRoom={newRoom}
+
+              />
             </div>
 
             <div className="mb-3">
