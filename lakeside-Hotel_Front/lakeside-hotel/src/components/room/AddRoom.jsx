@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { addRoom } from "../utils/ApiFunctions";
 import { RoomTypeSelector } from '../common/RoomTypeSelector';
+import { Link } from 'react-router-dom';
 
 const AddRoom = () => {
   const [newRoom, setNewRoom] = useState({
@@ -8,17 +9,17 @@ const AddRoom = () => {
     roomType: "",
     roomPrice: ""
   });
-  const [successMessage, setSuccessMessage] = useState("")
-  const [errorMessage, setErrorMessage] = useState("")
-  const [imagePreview, setImagePreview] = useState("")
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [imagePreview, setImagePreview] = useState("");
+  const [loading, setLoading] = useState(false); // Added loading state
 
   const handleRoomInputChange = (e) => {
-    const name = e.target.name
-    let value = e.target.value
+    const { name, value } = e.target;
 
     if (name === "roomPrice") {
       if (!isNaN(value)) {
-        setNewRoom({ ...newRoom, [name]: parseInt(value) });
+        setNewRoom({ ...newRoom, [name]: parseInt(value, 10) });
       } else {
         setNewRoom({ ...newRoom, [name]: "" });
       }
@@ -36,24 +37,28 @@ const AddRoom = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    
     try {
       const success = await addRoom(newRoom.photo, newRoom.roomType, newRoom.roomPrice);
-      console.log(success)
+      
       if (success) {
-        setSuccessMessage("A New Room was Added to the successfully");
+        setSuccessMessage("A New Room was Added Successfully");
         setNewRoom({ photo: null, roomType: "", roomPrice: "" });
         setImagePreview("");
         setErrorMessage("");
       } else {
-        setErrorMessage("Error adding room");
+        setErrorMessage("Error Adding Room");
       }
     } catch (error) {
       setErrorMessage(error.message);
+    } finally {
+      setLoading(false); // Reset loading state
     }
+
     setTimeout(() => {
-      setSuccessMessage("")
-      setErrorMessage("")
-    }, 3000)
+      setSuccessMessage("");
+      setErrorMessage("");
+    }, 3000);
   };
 
   return (
@@ -62,24 +67,16 @@ const AddRoom = () => {
         <div className="col-md-8 col-lg-6">
           <h2 className="mt-5 mb-2">Add a New Room</h2>
 
-          {successMessage && (
-            <div className='alert alert-success fade show'>{successMessage}</div>
-          )}
-          {errorMessage && (
-            <div className='alert alert-danger fade show'>{errorMessage}</div>
-          )}
+          {successMessage && <div className='alert alert-success fade show'>{successMessage}</div>}
+          {errorMessage && <div className='alert alert-danger fade show'>{errorMessage}</div>}
+          {loading && <div className='alert alert-info fade show'>Loading...</div>} {/* Added loading indicator */}
 
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
-              <label htmlFor="roomType" className="form-label">
-                Room Type</label>
-            </div>
-            <div>
+              <label htmlFor="roomType" className="form-label">Room Type</label>
               <RoomTypeSelector
-                // newRoom={newRoom.roomType} 
                 handleRoomInputChange={handleRoomInputChange}
                 newRoom={newRoom}
-
               />
             </div>
 
@@ -95,6 +92,7 @@ const AddRoom = () => {
                 onChange={handleRoomInputChange}
               />
             </div>
+
             <div className="mb-3">
               <label htmlFor="photo" className="form-label">Photo</label>
               <input
@@ -105,17 +103,19 @@ const AddRoom = () => {
                 onChange={handleImageChange}
               />
               {imagePreview && (
-                <img
-                  src={imagePreview}
-                  alt="Preview Room Photo"
-                  style={{ maxWidth: "400px", maxHeight: "400px" }}
-                  className="mb-3"
-                />
-              )}
+              <img
+                src={`data:image/jpeg;base64,${imagePreview}`}
+                alt="Room Preview"
+                style={{ maxWidth: "400px", maxHeight: "400px" }}
+                className="mt-3"
+              />
+            )}
             </div>
-            <button type="submit" className="btn btn-outline-primary ml-5" disabled={loading}>
-              {loading ? 'Saving...' : 'Save Room'}
-            </button>
+
+            <div className="d-grid gap-2 d-md-flex mt-2">
+              <Link to={"/existing-rooms"} className="btn btn-outline-info">Back</Link>
+              <button type="submit" className="btn btn-outline-primary ml-5">Save Room</button>
+            </div>
           </form>
         </div>
       </div>

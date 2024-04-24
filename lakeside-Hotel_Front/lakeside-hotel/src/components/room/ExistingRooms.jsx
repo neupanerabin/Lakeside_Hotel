@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom' // Import Link from react-router-dom
 import { deleteRoom, getAllrooms } from '../utils/ApiFunctions'
-import { Col } from "react-bootstrap"
+import { Col, Row } from "react-bootstrap"
 import RoomPaginator from '../common/RoomPaginator'
 import RoomFilter from '../common/RoomFilter'
-import { FaTrashAlt, FaEye, FaEdit } from "react-icons/fa" // Import FaEdit from react-icons/fa
+import { FaTrashAlt, FaEye, FaEdit,FaPlus } from "react-icons/fa" // Import FaEdit from react-icons/fa
+
 
 const ExistingRooms = () => {
   const [rooms, setRooms] = useState([])
@@ -21,7 +22,7 @@ const ExistingRooms = () => {
   }, [])
 
   const fetchRooms = async () => {
-    setIsLoading(true)
+    setIsLoading(true) 
     try {
       const result = await getAllrooms()
       setRooms(result)
@@ -46,10 +47,6 @@ const ExistingRooms = () => {
     setCurrentPage(pageNumber)
   }
 
-  const calculateTotalPages = (filteredRooms, roomsPerPage, rooms) => {
-    const totalRooms = filteredRooms.length > 0 ? filteredRooms.length : rooms.length
-    return Math.ceil(totalRooms / roomsPerPage)
-  }
 
   const handleDelete = async (roomId) => {
     try {
@@ -67,7 +64,12 @@ const ExistingRooms = () => {
     setTimeout(() => {
       setSuccessMessage("")
       setErrorMessage("")
-    }, 3000)
+    }, 3000) 
+  }
+  
+  const calculateTotalPages = (filteredRooms, roomsPerPage, rooms) => {
+    const totalRooms = filteredRooms.length > 0 ? filteredRooms.length : rooms.length
+    return Math.ceil(totalRooms / roomsPerPage)
   }
 
   const indexOfLastRoom = currentPage * roomsPerPage
@@ -76,17 +78,32 @@ const ExistingRooms = () => {
 
   return (
     <>
+    <div className="container col-md-8 col-lg-6">
+      {successMessage && <p className="alert alert-success mt-5">{successMessage}</p>}
+
+      {errorMessage && <p className="alert alert-danger mt-5">{errorMessage}</p>}
+    </div>
+
       {isLoading ? (
         <p> Loading existing rooms</p>
       ) : (
         <>
           <section className="mt-5 mb-5 container">
-            <div className="d-flex justify-content-center mb-3 mt-5">
-              <h2>Existing Rooms </h2>
+            <div className="d-flex justify-content-between mb-3 mt-5">
+              <h2>Existing Rooms </h2> 
             </div>
+
+            <Row>
             <Col md={6} className="mb-3 mb-md-0">
               <RoomFilter data={rooms} setFilteredRooms={setFilteredRooms} />
             </Col>
+
+            <Col md={6} className="d-flex justify content-end">
+            <Link to={"/add-room"}>
+                <FaPlus/>Add Room 
+              </Link>
+            </Col>
+            </Row>
             <table className='table table-bordered table-hover'>
               <thead>
                 <tr className="text-center">
