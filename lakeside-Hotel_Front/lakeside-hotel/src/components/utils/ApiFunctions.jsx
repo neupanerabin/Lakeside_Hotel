@@ -66,7 +66,7 @@ export async function updateRoom(roomId, roomData){
 }
 
 // This function gets a room by the id
-export async function getRoomById(roomId ){
+export async function getRoomById(roomId){
     try{
         const result = await api.get(`/rooms/room/${roomId}`);
         return result.data

@@ -9,6 +9,7 @@ const EditRoom = () => {
         roomPrice: "" 
       });
 
+      const [loading, setLoading] = useState(false); // Define loading state
       const [successMessage, setSuccessMessage] = useState("");
       const [errorMessage, setErrorMessage] = useState("");
       const [imagePreview, setImagePreview] = useState("");
@@ -16,13 +17,13 @@ const EditRoom = () => {
 
       const handleImageChange = (e) => {
         const selectedImage = e.target.files[0];
-        setRoom({ ...Room, photo: selectedImage });
+        setRoom({ ...newRoom, photo: selectedImage });   // Change room to new room
         setImagePreview(URL.createObjectURL(selectedImage));
       }
 
       const handleRoomInputChange = (event) => {
         const {name, value} = event.target
-        setRoom({...room, [name]: value })
+        setRoom({...newRoom, [name]: value })
 
       }
 
@@ -44,9 +45,8 @@ const EditRoom = () => {
 const handleSubmit = async (event) =>{
   event.preventDefault();
   setLoading(true);
-
   try{
-    const response = await updateRoom(roomId, room)
+    const response = await updateRoom(roomId, newRoom)
     if(response.status === 200){
       setSuccessMessage("Room updated successfully !")
       const updatedRoomData = await getRoomById(roomId)
@@ -85,19 +85,10 @@ return (
               className="form-control"
               id="roomType"
               name="roomType"
-              value={room.roomType}
-              onChange={handleImageChange}
+              value={newRoom.roomType}
+              onChange={handleRoomInputChange}
               />
           </div> 
-          {/* <div>
-            <RoomTypeSelector
-              // newRoom={newRoom.roomType} 
-              handleRoomInputChange={handleRoomInputChange}
-              newRoom={newRoom}
-
-            />
-          </div> */}
-
           <div className="mt-3">
             <label htmlFor="roomPrice" className="form-label hotel-color">Room Price</label>
             <input

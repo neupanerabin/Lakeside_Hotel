@@ -100,7 +100,7 @@ const ExistingRooms = () => {
 
             <Col md={6} className="d-flex justify content-end">
             <Link to={"/add-room"}>
-                <FaPlus/>Add Room 
+                <FaPlus/>Add Room   
               </Link>
             </Col>
             </Row>
@@ -126,10 +126,12 @@ const ExistingRooms = () => {
                           View
                         </span>
                       </Link>
+                      {/* Edit the room */}
                       <span className="btn btn-warning btn-sm">
                         <FaEdit />
                         Edit
                       </span>
+                      {/* Delete the room  */}
                       <button
                         className="btn btn-danger btn-sm"
                         onClick={() => handleDelete(room.id)}
