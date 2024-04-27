@@ -37,10 +37,10 @@ const AddRoom = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    
+
     try {
       const success = await addRoom(newRoom.photo, newRoom.roomType, newRoom.roomPrice);
-      
+
       if (success) {
         setSuccessMessage("A New Room was Added Successfully");
         setNewRoom({ photo: null, roomType: "", roomPrice: "" });
@@ -103,13 +103,13 @@ const AddRoom = () => {
                 onChange={handleImageChange}
               />
               {imagePreview && (
-              <img
-                src={`data:image/jpeg;base64,${imagePreview}`}
-                alt="Room Preview"
-                style={{ maxWidth: "400px", maxHeight: "400px" }}
-                className="mt-3"
-              />
-            )}
+                <img
+                  src={`data:image/jpeg;base64,${imagePreview}`}
+                  alt="Room Preview"
+                  style={{ maxWidth: "400px", maxHeight: "400px" }}
+                  className="mt-3"
+                />
+              )}
             </div>
 
             <div className="d-grid gap-2 d-md-flex mt-2">

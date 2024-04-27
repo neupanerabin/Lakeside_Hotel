@@ -96,7 +96,7 @@ public ResponseEntity<RoomResponse> updateRoom(@PathVariable Long roomId,
             RoomResponse roomResponse = getRoomResponse(room);
             return ResponseEntity.ok(Optional.of(roomResponse));
         }).orElseThrow(()-> new ResourceNotFoundException("Room not found"));
-    }
+    } 
 
     private RoomResponse getRoomResponse(Room room) {
         List<BookedRoom> bookings = getAllBookingsByRoomId(room.getId());

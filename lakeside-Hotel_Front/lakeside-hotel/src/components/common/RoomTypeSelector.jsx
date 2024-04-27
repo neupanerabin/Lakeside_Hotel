@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { getRoomTypes } from '../utils/ApiFunctions'
 
+
 export const RoomTypeSelector = ({ handleRoomInputChange, newRoom }) => {
     const [roomTypes, setRoomTypes] = useState([""])
     const [showNewRoomTypeInput, setShowNewRoomTypesInput] = useState(false)
@@ -58,10 +59,11 @@ export const RoomTypeSelector = ({ handleRoomInputChange, newRoom }) => {
                             />
                             <button className='btn btn-hotel' type='button' onClick={handleAddNewRoomType}>Add</button>
                         </div>
+
                     )}
                 </div>
             )}
-              </>
+        </>
     )
 }
 

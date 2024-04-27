@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
 
-const RoomFilter = ({ data, setFilteredData }) => {
+// const RoomFilter = ({ data, setFilteredData }) => {
+const RoomFilter = ({ data, setFilteredRooms, setSelectedRoomType }) => {
+
     const [filter, setFilter] = useState("")
 
     const handleSelectChange = (e) => {
         const selectedRoomType = e.target.value
         setFilter(selectedRoomType)
+        setSelectedRoomType(selectedRoomType); // Set the selected room type
         const filteredRooms = data.filter((room) =>
             room.roomType.toLowerCase().include(selectedRoomType.toLowerCase()))
         setFilteredData(filteredRooms)
