@@ -17,7 +17,7 @@ function App() {
   return <>
     <main>
       <Router>
-        <NavBar />
+        <NavBar />  
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/edit-room/:roomId" element={<EditRoom />} />

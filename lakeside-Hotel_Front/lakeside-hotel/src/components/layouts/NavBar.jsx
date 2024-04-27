@@ -14,7 +14,7 @@ export const NavBar = () => {
             <div className="container-fluid">
                 <Link to={""}>
                     <span className="hotel-color">
-                        LakeSide Hotel
+                        lakeSide Hotel
                     </span>
 
                 </Link>
@@ -33,7 +33,7 @@ export const NavBar = () => {
                     <ul className='navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll'>
                         <li className='nav-item'>
                             <NavLink className='nav-link' aria-current='page' to={"/browse-all-rooms"}>
-                                Browse all rooms</NavLink>
+                                Browse All Rooms</NavLink>
                         </li>
                         <li className='nav-item'>
                             <NavLink className='nav-link' aria-current='page' to={"/browse-all-rooms"}>

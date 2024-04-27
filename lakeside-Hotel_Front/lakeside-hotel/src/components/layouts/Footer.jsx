@@ -9,8 +9,7 @@ const Footer = () => {
       <Container>
         <Row>
           <Col xs={12} md={12} className="text-center">
-
-            <p>&copy; {today.getFullYear()} lakeside Hotel</p>
+            <p>&copy; {today.getFullYear()} lakeSide Hotel</p>
           </Col>
         </Row>
       </Container>
