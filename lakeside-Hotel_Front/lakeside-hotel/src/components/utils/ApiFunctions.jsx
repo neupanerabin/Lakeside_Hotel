@@ -31,6 +31,7 @@ export async function getRoomTypes() {
 }
 // This functions gets all rooms from the database 
 
+// ApiFunctions.jsx
 export async function getAllrooms() {
     try {
         const result = await api.get("/rooms/all-rooms");
