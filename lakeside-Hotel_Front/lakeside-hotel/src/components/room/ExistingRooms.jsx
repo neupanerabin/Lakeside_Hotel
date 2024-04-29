@@ -90,7 +90,8 @@ const ExistingRooms = () => {
 
             <Row>
               <Col md={6} className="mb-3 mb-md-0">
-                <RoomFilter data={rooms} setFilteredRooms={setFilteredRooms} />
+                <RoomFilter data={rooms} setFilteredRooms={setFilteredRooms} setSelectedRoomType={setSelectedRoomType} />
+
               </Col>
 
               <Col md={6} className="d-flex justify content-end">
