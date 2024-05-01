@@ -1,7 +1,7 @@
-import React from 'react'
-import { Card, CardBody, Col, Container, Row } from 'react-bootstrap'
-import Header from './Header'
-import { FaClock, FaCocktail, FaParking, FaSnowflake, FaTshirt, FaUtensils, FaWifi } from "react-icons/fa"
+import React from 'react';
+import { Card, Col, Container, Row } from 'react-bootstrap';
+import Header from './Header';
+import { FaClock, FaCocktail, FaParking, FaSnowflake, FaTshirt, FaUtensils, FaWifi } from "react-icons/fa";
 
 const HotelService = () => {
     return (
@@ -20,74 +20,68 @@ const HotelService = () => {
                 <Row xs={1} md={2} lg={3} className='g-4 mt-2'>
                     <Col>
                         <Card>
-                            <RoomCard.Body>
+                            <Card.Body>
                                 <Card.Title className='hotel-color'>
                                     <FaWifi /> WiFi
-
                                 </Card.Title>
-                                <Card.Text>Stay connected with high speed internet access.</Card.Text>
-                            </RoomCard.Body>
+                                <Card.Text>Stay connected with high-speed internet access.</Card.Text>
+                            </Card.Body>
                         </Card>
                     </Col>
                     <Col>
                         <Card>
-                            <RoomCard.Body>
+                            <Card.Body>
                                 <Card.Title className='hotel-color'>
                                     <FaUtensils /> Breakfast
-
                                 </Card.Title>
-                                <Card.Text>Stay connected with high speed internet access.</Card.Text>
-                            </RoomCard.Body>
+                                <Card.Text>Start your day right with our delicious breakfast options.</Card.Text>
+                            </Card.Body>
                         </Card>
                     </Col>
                     <Col>
                         <Card>
-                            <RoomCard.Body>
+                            <Card.Body>
                                 <Card.Title className='hotel-color'>
                                     <FaTshirt /> Laundry
-
                                 </Card.Title>
                                 <Card.Text>Keep your clothes clean and fresh with our laundry service.</Card.Text>
-                            </RoomCard.Body>
+                            </Card.Body>
                         </Card>
                     </Col> 
                     <Col>
                         <Card>
-                            <RoomCard.Body>
+                            <Card.Body>
                                 <Card.Title className='hotel-color'>
                                     <FaCocktail /> Mini Bar
-
                                 </Card.Title>
-                                <Card.Text>Enjoy a refreshing drink or snack from our in-room mini bar</Card.Text>
-                            </RoomCard.Body>
+                                <Card.Text>Enjoy a refreshing drink or snack from our in-room mini bar.</Card.Text>
+                            </Card.Body>
                         </Card>
                     </Col>
                     <Col>
                         <Card>
-                            <RoomCard.Body>
+                            <Card.Body>
                                 <Card.Title className='hotel-color'>
                                     <FaParking /> Parking
-
                                 </Card.Title>
-                                <Card.Text>Park your car convenintely in our on-site parking lot. </Card.Text>
-                            </RoomCard.Body>
+                                <Card.Text>Park your car conveniently in our on-site parking lot.</Card.Text>
+                            </Card.Body>
                         </Card>
                     </Col>
                     <Col>
                         <Card>
-                            <RoomCard.Body>
+                            <Card.Body>
                                 <Card.Title className='hotel-color'>
                                     <FaSnowflake /> Air Conditioning
-
                                 </Card.Title>
-                                <Card.Text>Stay cool and comfortable with our air conditioning system</Card.Text>
-                            </RoomCard.Body>
+                                <Card.Text>Stay cool and comfortable with our air conditioning system.</Card.Text>
+                            </Card.Body>
                         </Card>
                     </Col>
                 </Row>
             </Container>
         </>
-    )
+    );
 }
 
-export default HotelService
+export default HotelService;
