@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { getAllrooms } from '../utils/ApiFunctions'
 import { Link } from 'react-router-dom'
-import { Carousel, Col, Container } from 'react-bootstrap'
+import { Card, Carousel, Col, Container, Row } from 'react-bootstrap'
 
 const RoomCarousel = () => {
-    const [rooms, setRooms] = useState([])
+    const [rooms, setRooms] = useState([{id:"", roomType:"", roomPrice: "", photo:""}])
     const [errorMessage, setErrorMessage] = useState("")
     const [isLoading, setIsLoading] = useState(false)
 
@@ -37,9 +37,30 @@ const RoomCarousel = () => {
                     {[...Array(Math.ceil(rooms.length / 4))].map((_, index) => (
                         <Carousel.Item key={index} >
                             <Row>
-                                {rooms.slice(index * 4, index * 4 + 4).map((room)=>(
+                                {rooms.slice(index * 4, index * 4 + 4).map((room) => (
                                     <Col key={room.id} className='mb-4' xs={12} md={6} lg={3}>
-                                        
+                                        <Link to={`/book-room/${room.id}`}>
+                                            <Card.Img
+                                                variant='top'
+                                                src={`data:image/png;base64, ${room.photo}`}
+                                                alt="Room Photo"
+                                                className="w-100"
+                                                style={{ height: "200px" }}
+                                            />
+                                        </Link>
+                                        <Card.Body>
+                                            <Card.Title className='hotel-color'>{room.roomType}</Card.Title>
+                                            <Card.Title className='room-price'>{room.roomPrice} / night</Card.Title>
+                                            <div className='flex-shrink-0'>
+                                                <Link className='btn btn-hotel btn-sm' to={`book-room/${room.id}`} >
+                                                    Book Now
+                                                </Link>
+
+
+                                            </div>
+
+                                        </Card.Body>
+
                                     </Col>
                                 ))}
                             </Row>
