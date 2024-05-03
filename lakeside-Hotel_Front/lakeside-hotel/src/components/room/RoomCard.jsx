@@ -24,8 +24,6 @@ const RoomCard = ({ room }) => {
                         <Link to={`bookings/${room.id}`} className='btn btn-hotel btn-sm'>
                             Book Now 
                         </Link>
-
-
                     </div>
                 </Card.Body>
             </Card>
