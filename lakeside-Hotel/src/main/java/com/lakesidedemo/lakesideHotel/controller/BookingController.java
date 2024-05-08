@@ -1,12 +1,13 @@
 package com.lakesidedemo.lakesideHotel.controller;
 
+import com.lakesidedemo.lakesideHotel.exception.ResourceNotFoundException;
 import com.lakesidedemo.lakesideHotel.model.BookedRoom;
 import com.lakesidedemo.lakesideHotel.response.BookingResponse;
 import com.lakesidedemo.lakesideHotel.service.IBookedroomService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,30 @@ public class BookingController {
         return ResponseEntity.ok(bookingResponses);
     }
 
-    
+    @GetMapping("/confirmation/{confirmationCode}")
+    public ResponseEntity<?> getBookingByConfirmationCode(@PathVariable String confirmationCode){
+        try{
+            BookedRoom booking = bookingService.findByBookingConfirmationCode(confirmationCode);
+            BookingResponse bookingResponse = getBookingResponse(booking);
+            return ResponseEntity.ok(bookingResponse);
+        }catch(ResourceNotFoundException ex){
+             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+
+        }
+    }
+    public ResponseEntity<?> saveBooking(@PathVariable Long roomId,
+                                         @RequestBody BookedRoom bookingRequest){
+
+        try{
+            String confirmationCode = bookingService.saveBooking(roomId, bookingRequest);
+            return ResponseEntity.ok(
+                    "Room Booked Successfully, Your booking confirmation code is :"+ confirmationCode);
+
+        }catch(InvalidBookingRequestException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+
+        }
+
+    }
 
 }
