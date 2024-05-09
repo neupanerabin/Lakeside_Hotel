@@ -1,9 +1,13 @@
 package com.lakesidedemo.lakesideHotel.controller;
 
+import com.lakesidedemo.lakesideHotel.exception.InvalidBookingRequestException;
 import com.lakesidedemo.lakesideHotel.exception.ResourceNotFoundException;
 import com.lakesidedemo.lakesideHotel.model.BookedRoom;
+import com.lakesidedemo.lakesideHotel.model.Room;
 import com.lakesidedemo.lakesideHotel.response.BookingResponse;
+import com.lakesidedemo.lakesideHotel.response.RoomResponse;
 import com.lakesidedemo.lakesideHotel.service.IBookedroomService;
+import com.lakesidedemo.lakesideHotel.service.IRoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +21,7 @@ import java.util.List;
 @RequestMapping("/bookings")
 public class BookingController {
     private final IBookedroomService bookingService;
+    private final IRoomService roomService;
 
     @RequestMapping("all-bookings")
     public ResponseEntity<List<BookingResponse>> getAllBookings(){
@@ -40,6 +45,8 @@ public class BookingController {
 
         }
     }
+
+    @PostMapping("/room/{roomId}/booking")
     public ResponseEntity<?> saveBooking(@PathVariable Long roomId,
                                          @RequestBody BookedRoom bookingRequest){
 
@@ -52,7 +59,22 @@ public class BookingController {
             return ResponseEntity.badRequest().body(e.getMessage());
 
         }
+    }
 
+    @DeleteMapping("/booking/{bookingId}/delete")
+    public void cancelBooking(@PathVariable Long bookingId) {
+        bookingService.cancelBooking(bookingId);
+    }
+
+    private BookingResponse getBookingResponse(BookedRoom booking){
+        Room theRoom = roomService.getRoomById(booking.getBookingId()).get();
+        RoomResponse room = new RoomResponse(theRoom.getId(), theRoom.getRoomType(), theRoom.getRoomPrice());
+
+        return new BookingResponse(booking.getBookingId(), booking.getCheckInDate(),
+                booking.getCheckOutDate(),
+                booking.getGuestFullName(), booking.getGuestEmail(), booking.getNumOfAdults(),
+                booking.getNumOfChildren(), booking.getTotalNumOfGuest(),
+                booking.getBookingConfirmationCode(),room);
     }
 
 }
