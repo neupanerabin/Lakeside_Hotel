@@ -6,7 +6,7 @@ import com.lakesidedemo.lakesideHotel.model.BookedRoom;
 import com.lakesidedemo.lakesideHotel.model.Room;
 import com.lakesidedemo.lakesideHotel.response.BookingResponse;
 import com.lakesidedemo.lakesideHotel.response.RoomResponse;
-import com.lakesidedemo.lakesideHotel.service.IBookedroomService;
+import com.lakesidedemo.lakesideHotel.service.IBookingService;
 import com.lakesidedemo.lakesideHotel.service.IRoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,14 +20,14 @@ import java.util.List;
 @RestController
 @RequestMapping("/bookings")
 public class BookingController {
-    private final IBookedroomService bookingService;
+    private final IBookingService bookingService;
     private final IRoomService roomService;
 
     @RequestMapping("all-bookings")
     public ResponseEntity<List<BookingResponse>> getAllBookings(){
         List<BookedRoom> bookings = bookingService.getAllBookings();
         List<BookingResponse> bookingResponses = new ArrayList<>();
-        for(BookedRoom room:bookings){
+        for(BookedRoom booking:bookings){
             BookingResponse bookingResponse = getBookingResponse(booking);
             bookingResponses.add(bookingResponse);
         }
@@ -70,9 +70,10 @@ public class BookingController {
         Room theRoom = roomService.getRoomById(booking.getBookingId()).get();
         RoomResponse room = new RoomResponse(theRoom.getId(), theRoom.getRoomType(), theRoom.getRoomPrice());
 
-        return new BookingResponse(booking.getBookingId(), booking.getCheckInDate(),
-                booking.getCheckOutDate(),
-                booking.getGuestFullName(), booking.getGuestEmail(), booking.getNumOfAdults(),
+        return new BookingResponse(
+                booking.getBookingId(), booking.getCheckInDate(),
+                booking.getCheckOutDate(), booking.getGuestFullName(),
+                booking.getGuestEmail(), booking.getNumOfAdults(),
                 booking.getNumOfChildren(), booking.getTotalNumOfGuest(),
                 booking.getBookingConfirmationCode(),room);
     }
