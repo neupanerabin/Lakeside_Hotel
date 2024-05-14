@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { getRoomTypes } from '../utils/ApiFunctions'
-import { useParams } from 'react-router'
+import { bookRoom, getRoomTypes } from '../utils/ApiFunctions'
+import { useNavigate, useParams } from 'react-router'
 import momnet from "moment"
 
 const BookingForm = () => {
@@ -27,6 +27,7 @@ const BookingForm = () => {
     })
 
     const { roomId } = useParams()
+    const navigate = useNavigate()
 
     const handleInputChange = (e) => {
         const { name, value } = e.target
@@ -83,7 +84,17 @@ const BookingForm = () => {
         setIsValidated(true)
     }
 
+    const handleBooking = async() =>{
+        try{
+            const confirmationCode = await bookRoom(roomId, booking)
+            setIsSubmitted(true)
+            navigate(" /", {message : confirmationCode}) 
 
+        }catch(error){
+            setErrorMessage(error.message)
+            navigate(" /", {state : {error: errorMessage } })
+        }
+    }
 
     return (
         <div>BookingForm</div>
