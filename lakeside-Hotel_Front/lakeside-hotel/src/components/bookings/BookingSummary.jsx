@@ -1,30 +1,31 @@
-import React, { useEffect, useState } from 'react'
-import moment from 'moment'
-import { useNavigate } from 'react-router'
-import BookingForm from './BookingForm'
-import { Button } from 'react-bootstrap'
+import React, { useEffect, useState } from 'react';
+import moment from 'moment';
+import { useNavigate } from 'react-router';
+import BookingForm from './BookingForm';
+import { Button } from 'react-bootstrap';
 
 const BookingSummary = ({ booking, payment, isFormValid, onConfirm }) => {
-    const checkInDate = moment(booking.checkInDate)
-    const checkOutDate = moment(booking.checkOutDate)
-    const numberOfDays = checkOutDate.diff(checkInDate, "days")
-    const [isBookingConfirmed, setIsBookingConfirmed] = useState(false)
-    const [isProcessingPayment, setIsProcessingPayment] = useState(false)
-    const navigate = useNavigate()
+    const checkInDate = moment(booking.checkInDate);
+    const checkOutDate = moment(booking.checkOutDate);
+    const numberOfDays = checkOutDate.diff(checkInDate, "days");
+    const [isBookingConfirmed, setIsBookingConfirmed] = useState(false);
+    const [isProcessingPayment, setIsProcessingPayment] = useState(false);
+    const navigate = useNavigate();
 
     const handleConfirmBooking = () => {
-        setIsProcessingPayment(true)
+        setIsProcessingPayment(true);
         setTimeout(() => {
-            setIsProcessingPayment(false)
-            setIsBookingConfirmed(true)
-            onConfirm()
-        }, 3000)
-    }
+            setIsProcessingPayment(false);
+            setIsBookingConfirmed(true);
+            onConfirm();
+        }, 3000);
+    };
+
     useEffect(() => {
         if (isBookingConfirmed) {
-            navigate("/booking-success")
+            navigate("/booking-success");
         }
-    }, [isBookingConfirmed, navigate])
+    }, [isBookingConfirmed, navigate]);
 
 
     return (
@@ -49,40 +50,32 @@ const BookingSummary = ({ booking, payment, isFormValid, onConfirm }) => {
             {payment > 0 ? (
                 <>
                     <p>
-
-
                         Total Payment: <strong>${payment}</strong>
                     </p>
                     {isFormValid && !isBookingConfirmed ? (
-                        <Button
-                            variant='success' onClick={handleConfirmBooking}>
+                        <Button variant='success' onClick={handleConfirmBooking}>
                             {isProcessingPayment ? (
                                 <>
-                                    <span
-                                        className='spinner-border spinner-border-sm mr-2'
-                                        role='status'
-                                        aria-hidden="true">
-                                    </span>
+                                    <span className='spinner-border spinner-border-sm mr-2' role='status' aria-hidden="true"></span>
                                     Booking Confirmed, redirecting to payment ....
                                 </>
                             ) : (
                                 "Confirm Booking and proceed to payment"
                             )}
                         </Button>
-                    ) : isBookingConfirmed(
+                    ) : isBookingConfirmed ? (
                         <div className='d-flex justify-content-center align-items-center'>
-                            <div className='spinner-border text-primary ' role='status'>
+                            <div className='spinner-border text-primary' role='status'>
                                 <span className='sr-only'>Loading...</span>
                             </div>
                         </div>
                     ) : null}
                 </>
-            ): (
+            ) : (
                 <p className='text-danger'>Check-out date must be after check id date</p>
             )}
-
         </div>
-    )
-}
+    );
+};
 
-export default BookingSummary
+export default BookingSummary;

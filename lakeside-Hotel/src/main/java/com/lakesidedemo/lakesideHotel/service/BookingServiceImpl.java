@@ -47,13 +47,19 @@ public class BookingServiceImpl implements IBookingService {
 
     @Override
     public BookedRoom findByBookingConfirmationCode(String confirmationCode) {
-        return bookingRepository.findByBookingConfirationCode(confirmationCode);
+        return bookingRepository.findByBookingConfirmationCode(confirmationCode);
     }
 
     @Override
     public List<BookedRoom> findByRoomId(Long roomId) {
         return bookingRepository.findByRoomId(roomId);
     }
+
+    @Override
+    public List<BookedRoom> getAllBookingsByRoomId(Long roomId) {
+        return null;
+    }
+
 
     private boolean roomIsAvailable(BookedRoom bookingRequest, List<BookedRoom> existingBookings) {
         return existingBookings.stream()

@@ -1,5 +1,6 @@
 import React from 'react'
 import { useLocation } from 'react-router'
+import Header from '../common/Header'
 
 const BookingSuccess = () => {
     const location = useLocation()
