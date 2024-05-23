@@ -11,7 +11,7 @@ const BookingForm = () => {
     const [errorMessage, setErrorMessage] = useState("");
     const [roomPrice, setRoomPrice] = useState(0);
     const [booking, setBooking] = useState({
-        guestName: "",
+        guestFullName: "",
         guestEmail: "",
         checkInDate: "",
         checkOutDate: "",
@@ -34,12 +34,16 @@ const BookingForm = () => {
             setRoomPrice(response.roomPrice);
         } catch (error) {
             throw new Error(error);
+  
         }
     };
 
     useEffect(() => {
-        getRoomPriceById(roomId);
+        if (roomId) {
+            getRoomPriceById(roomId);
+        }
     }, [roomId]);
+    
 
     const calculatePayment = () => {
         const checkInDate = moment(booking.checkInDate);
@@ -81,10 +85,11 @@ const BookingForm = () => {
         try {
             const confirmationCode = await bookRoom(roomId, booking);
             setIsSubmitted(true);
-            navigate("/", { state: { message: confirmationCode } }); // Removed extra space
+            navigate("/booking-success", { state: { message: confirmationCode } }); // Removed extra space
         } catch (error) {
             setErrorMessage(error.message);
-            navigate("/", { state: { error: errorMessage } });
+            setErrorMessage("Booking failed. Please try again later.");
+            navigate("/booking-success", { state: { error: errorMessage } });
         }
     };
 
@@ -96,14 +101,14 @@ const BookingForm = () => {
                         <div className='card card-body mt-5'>
                             <h4 className='card-title'>Reserved Room</h4>
                             <Form noValidate validated={isValidated} onSubmit={handleSubmit}>
-                            <Form.Group>
-                                    <Form.Label htmlFor="guestName">Full Name: </Form.Label>
+                                <Form.Group>
+                                    <Form.Label htmlFor="guestFullName">Full Name: </Form.Label>
                                     <Form.Control
                                         required
                                         type="text"
-                                        id="guestName"
-                                        name="guestName"
-                                        value={booking.guestName}
+                                        id="guestFullName"
+                                        name="guestFullName"
+                                        value={booking.guestFullName}
                                         placeholder="Enter your full name"
                                         onChange={handleInputChange}
                                     />
@@ -199,7 +204,10 @@ const BookingForm = () => {
                                 </fieldset>
                                 <div className='form-group mt-2 mb-2'>
                                     <button type='submit' className='btn btn-hotel'>Continue</button>
-                                </div>                            </Form>
+                                </div>
+                            </Form>
+
+
                         </div>
                     </div>
                     <div className='col-md-6'>

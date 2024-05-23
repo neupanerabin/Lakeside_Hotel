@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import { useNavigate } from 'react-router';
-import BookingForm from './BookingForm';
 import { Button } from 'react-bootstrap';
 
 const BookingSummary = ({ booking, payment, isFormValid, onConfirm }) => {
@@ -27,37 +26,28 @@ const BookingSummary = ({ booking, payment, isFormValid, onConfirm }) => {
         }
     }, [isBookingConfirmed, navigate]);
 
-
     return (
         <div className='card card-body mt-5'>
             <h4>Reservation summary</h4>
-
-            <p>Full Name : <strong>{booking.guestName}</strong></p>
-            <p>Email : <strong>{booking.guestEmail}</strong></p>
-            <p>Check-In Date : <strong>{moment(booking.checkInDate).format("MM Do YYYY")}</strong></p>
-            <p>Check-Out Date : <strong>{moment(booking.checkOutDate).format("MM Do YYYY")}</strong></p>
-            <p>Number of Days : <strong>{numberOfDays}</strong></p>
-
+            <p>Full Name: <strong>{booking.guestName}</strong></p>
+            <p>Email: <strong>{booking.guestEmail}</strong></p>
+            <p>Check-In Date: <strong>{checkInDate.format("MM Do YYYY")}</strong></p>
+            <p>Check-Out Date: <strong>{checkOutDate.format("MM Do YYYY")}</strong></p>
+            <p>Number of Days: <strong>{numberOfDays}</strong></p>
             <div>
                 <h5>Number of Guests</h5>
-                <strong>
-                    Adult{booking.numberOfAdults > 1 ? "s" : ""}:{booking.numberOfAdults}
-                </strong>
-                <strong>
-                    Children : {booking.numberOfChildren}
-                </strong>
+                <strong>Adult: {booking.numberOfAdults > 1 ? "s" : ""}: {booking.numberOfAdults}</strong><br />
+                <strong> Children: {booking.numberOfChildren}</strong>
             </div>
             {payment > 0 ? (
                 <>
-                    <p>
-                        Total Payment: <strong>${payment}</strong>
-                    </p>
+                    <p>Total Payment: <strong>NRs{payment}</strong></p>
                     {isFormValid && !isBookingConfirmed ? (
                         <Button variant='success' onClick={handleConfirmBooking}>
                             {isProcessingPayment ? (
                                 <>
                                     <span className='spinner-border spinner-border-sm mr-2' role='status' aria-hidden="true"></span>
-                                    Booking Confirmed, redirecting to payment ....
+                                    Booking Confirmed, redirecting to payment...
                                 </>
                             ) : (
                                 "Confirm Booking and proceed to payment"
@@ -72,7 +62,7 @@ const BookingSummary = ({ booking, payment, isFormValid, onConfirm }) => {
                     ) : null}
                 </>
             ) : (
-                <p className='text-danger'>Check-out date must be after check id date</p>
+                <p className='text-danger'>Check-out date must be after check-in date</p>
             )}
         </div>
     );
