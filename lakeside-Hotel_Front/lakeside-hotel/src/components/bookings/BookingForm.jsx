@@ -98,7 +98,7 @@ const BookingForm = () => {
             <div className='container mb-5'>
                 <div className='row'>
                     <div className='col-md-6'>
-                        <div className='card card-body mt-5'>
+                        <div className='card card-body mt-4'>
                             <h4 className='card-title'>Reserved Room</h4>
                             <Form noValidate validated={isValidated} onSubmit={handleSubmit}>
                                 <Form.Group>
@@ -210,7 +210,7 @@ const BookingForm = () => {
 
                         </div>
                     </div>
-                    <div className='col-md-6'>
+                    <div className='col-md-4'>
                         {isSubmitted && (
                             <BookingSummary
                                 booking={booking}
