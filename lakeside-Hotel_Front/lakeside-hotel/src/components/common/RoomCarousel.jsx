@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { Card, Carousel, Col, Container, Row } from 'react-bootstrap'
 
 const RoomCarousel = () => {
-    const [rooms, setRooms] = useState([{id:"", roomType:"", roomPrice: "", photo:""}])
+    const [rooms, setRooms] = useState([{ id: "", roomType: "", roomPrice: "", photo: "" }])
     const [errorMessage, setErrorMessage] = useState("")
     const [isLoading, setIsLoading] = useState(false)
 
@@ -39,7 +39,8 @@ const RoomCarousel = () => {
                             <Row>
                                 {rooms.slice(index * 4, index * 4 + 4).map((room) => (
                                     <Col key={room.id} className='mb-4' xs={12} md={6} lg={3}>
-                                        <Link to={`/book-room/${room.id}`}>
+                                        <Link to={`/book-room/${room.id}`} >
+
                                             <Card.Img
                                                 variant='top'
                                                 src={`data:image/png;base64, ${room.photo}`}
@@ -52,7 +53,7 @@ const RoomCarousel = () => {
                                             <Card.Title className='hotel-color'>{room.roomType}</Card.Title>
                                             <Card.Title className='room-price'>{room.roomPrice} / night</Card.Title>
                                             <div className='flex-shrink-0'>
-                                                <Link className='btn btn-hotel btn-sm' to={`book-room/${room.id}`} >
+                                            <Link to={`/book-room/${room.id}`} className='btn btn-hotel btn-sm'>
                                                     Book Now
                                                 </Link>
 
