@@ -1,49 +1,51 @@
 import { parseISO } from 'date-fns'
-import { tr } from 'date-fns/locale'
 import React, { useEffect, useState } from 'react'
+import DateSlider from "../common/DateSlider"
 
-const BookingsTable = ({bookingInfo, handleBookingCancellation}) => {
-    const[filteredBookings, setFilteredBookings] = useState(bookingInfo)
 
-    const filterBookings = (startDate, endDate) =>{
-        let filtered = bookingInfo
-        if(startDate && endDate){
-            filtered = bookingInfo.filter((booking) =>{
-                const bookingStartDate = parseISO(booking.chekInDate)
-                const bookingEndDate = parseISO(booking.chekOutDate)
-                return bookingStartDate >= startDate && bookingEndDate <= endDate && bookingEndDate > startDate
-                
-            })
+const BookingsTable = ({ bookingInfo, handleBookingCancellation }) => {
+  const [filteredBookings, setFilteredBookings] = useState(bookingInfo)
 
-        }
-        setFilteredBookings(filtered)
+  const filterBookings = (startDate, endDate) => {
+    let filtered = bookingInfo
+    if (startDate && endDate) {
+      filtered = bookingInfo.filter((booking) => {
+        const bookingStartDate = parseISO(booking.chekInDate)
+        const bookingEndDate = parseISO(booking.chekOutDate)
+        return bookingStartDate >= startDate && bookingEndDate <= endDate && bookingEndDate > startDate
+
+      })
+
     }
+    setFilteredBookings(filtered)
+  }
 
-    useEffect(() =>{
-      setFilteredBookings(bookingInfo)
+  useEffect(() => {
+    setFilteredBookings(bookingInfo)
 
-    }, [bookingInfo])
+  }, [bookingInfo])
 
   return (
 
     <section className='p-4'>
-      <DateSlider onDateChange={filterBookings} onFilterChange={filterBookings}/>
-      <table>
+      <DateSlider onDateChange={filterBookings} onFilterChange={filterBookings} />
+      <table className="table table-bordered table-hover shadow">
         <thead>
-        <tr>
-          <th>S/N</th>
-          <th>Booking Id</th>
-          <th>Room Id</th>
-          <th>Check-In Date</th>
-          <th>Check-Out Date</th>
-          <th>Guest Name</th>
-          <th>Guest Email</th>
-          <th>Adults</th>
-          <th>Cheildren</th>
-          <th>Total Guests</th>
-          <th>Cinfirmation Code</th>
-          <th colSpan={2}>Actions</th>
-        </tr>
+          <tr>
+            <th>S/N</th>
+            <th>Booking Id</th>
+            <th>Room Id</th>
+            <th>Room Type</th>
+            <th>Check-In Date</th>
+            <th>Check-Out Date</th>
+            <th>Guest Name</th>
+            <th>Guest Email</th>
+            <th>Adults</th>
+            <th>Cheildren</th>
+            <th>Total Guests</th>
+            <th>Cinfirmation Code</th>
+            <th colSpan={2}>Actions</th>
+          </tr>
         </thead>
         <tbody className='text-center'>
           {filteredBookings.map((booking, index) => (
@@ -51,6 +53,7 @@ const BookingsTable = ({bookingInfo, handleBookingCancellation}) => {
               <td>{index + 1}</td>
               <td>{booking.id}</td>
               <td>{booking.room.id}</td>
+              <td>{booking.room.roomType}</td>
               <td>{booking.chekInDate}</td>
               <td>{booking.chekOutDate}</td>
               <td>{booking.guestName}</td>
@@ -60,9 +63,9 @@ const BookingsTable = ({bookingInfo, handleBookingCancellation}) => {
               <td>{booking.totalNumofGuests}</td>
               <td>{booking.bookingConfirmationCode}</td>
               <td>
-                <button 
-                className='btn bt-danger btn-sm'
-                onClick={()=> handleBookingCancellation(booking.id)}>
+                <button
+                  className='btn bt-danger btn-sm'
+                  onClick={() => handleBookingCancellation(booking.id)}>
                   Cancel
                 </button>
               </td>
