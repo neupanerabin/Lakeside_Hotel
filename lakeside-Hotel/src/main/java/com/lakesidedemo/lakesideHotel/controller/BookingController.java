@@ -16,6 +16,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+* @author Rabin
+* */
+
 @CrossOrigin(origins = "http://localhost:5173")
 @RequiredArgsConstructor
 @RestController
@@ -24,7 +28,7 @@ public class BookingController {
     private final IBookingService bookingService;
     private final IRoomService roomService;
 
-    @RequestMapping("all-bookings")
+    @GetMapping("all-bookings")
     public ResponseEntity<List<BookingResponse>> getAllBookings(){
         List<BookedRoom> bookings = bookingService.getAllBookings();
         List<BookingResponse> bookingResponses = new ArrayList<>();
@@ -66,8 +70,9 @@ public class BookingController {
     }
 
     private BookingResponse getBookingResponse(BookedRoom booking){
-        Room theRoom = roomService.getRoomById(booking.getBookingId()).get();
-        RoomResponse room = new RoomResponse(theRoom.getId(),
+        Room theRoom = roomService.getRoomById(booking.getRoom().getId()).get();
+        RoomResponse room = new RoomResponse(
+                theRoom.getId(),
                 theRoom.getRoomType(),
                 theRoom.getRoomPrice());
 

@@ -15,6 +15,7 @@ import java.math.BigDecimal;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -85,6 +86,8 @@ public class RoomServiceImpl  implements IRoomService{
 
     @Override
     public Optional<Room> getRoomById(Long roomId) {
-        return Optional.of(roomRepository.findById(roomId).get());
+       return Optional.of(roomRepository.findById(roomId).get());
+
     }
+
 }
