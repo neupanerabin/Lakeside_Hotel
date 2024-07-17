@@ -10,8 +10,8 @@ const BookingsTable = ({ bookingInfo, handleBookingCancellation }) => {
     let filtered = bookingInfo
     if (startDate && endDate) {
       filtered = bookingInfo.filter((booking) => {
-        const bookingStartDate = parseISO(booking.chekInDate)
-        const bookingEndDate = parseISO(booking.chekOutDate)
+        const bookingStartDate = parseISO(booking.checkInDate)
+        const bookingEndDate = parseISO(booking.checkOutDate)
         return bookingStartDate >= startDate && bookingEndDate <= endDate && bookingEndDate > startDate
 
       })
@@ -41,30 +41,30 @@ const BookingsTable = ({ bookingInfo, handleBookingCancellation }) => {
             <th>Guest Name</th>
             <th>Guest Email</th>
             <th>Adults</th>
-            <th>Cheildren</th>
+            <th>Children</th>
             <th>Total Guests</th>
-            <th>Cinfirmation Code</th>
+            <th>Confirmation Code</th>
             <th colSpan={2}>Actions</th>
           </tr>
         </thead>
         <tbody className='text-center'>
           {filteredBookings.map((booking, index) => (
-            <tr key={booking.id}>
+            <tr key={booking.Id}>
               <td>{index + 1}</td>
-              <td>{booking.id}</td>
+              <td>{booking.bookingId}</td>
               <td>{booking.room.id}</td>
               <td>{booking.room.roomType}</td>
-              <td>{booking.chekInDate}</td>
-              <td>{booking.chekOutDate}</td>
-              <td>{booking.guestName}</td>
-              <td>{booking.guesEmail}</td>
+              <td>{booking.checkInDate}</td>
+              <td>{booking.checkOutDate}</td>
+              <td>{booking.guestFullName}</td>
+              <td>{booking.guestEmail}</td>
               <td>{booking.numOfAdults}</td>
-              <td>{booking.numOfChilden}</td>
-              <td>{booking.totalNumofGuests}</td>
+              <td>{booking.numOfChildren}</td>
+              <td>{booking.totalNumOfGuest}</td>
               <td>{booking.bookingConfirmationCode}</td>
               <td>
                 <button
-                  className='btn bt-danger btn-sm'
+                  className='btn btn-danger btn-sm'
                   onClick={() => handleBookingCancellation(booking.id)}>
                   Cancel
                 </button>
