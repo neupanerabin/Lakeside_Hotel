@@ -131,6 +131,7 @@ export async function cancelBooking(bookingId){
         const result = await api.delete(`/bookings/booking/${bookingId}/delete`)
         return result.data
     }catch(error){
+        console.error('Error cancelling booking:', error);
         throw new Error(`Error cancelling booking :${error.message}`)
 
     }
