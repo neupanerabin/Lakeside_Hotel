@@ -17,8 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /*
-* @author Rabin
-* */
+ * @author Rabin
+ * */
 
 @CrossOrigin(origins = "http://localhost:5173")
 @RequiredArgsConstructor
@@ -29,10 +29,10 @@ public class BookingController {
     private final IRoomService roomService;
 
     @GetMapping("all-bookings")
-    public ResponseEntity<List<BookingResponse>> getAllBookings(){
+    public ResponseEntity<List<BookingResponse>> getAllBookings() {
         List<BookedRoom> bookings = bookingService.getAllBookings();
         List<BookingResponse> bookingResponses = new ArrayList<>();
-        for(BookedRoom booking:bookings){
+        for (BookedRoom booking : bookings) {
             BookingResponse bookingResponse = getBookingResponse(booking);
             bookingResponses.add(bookingResponse);
         }
@@ -40,19 +40,19 @@ public class BookingController {
     }
 
     @GetMapping("/confirmation/{confirmationCode}")
-    public ResponseEntity<?> getBookingByConfirmationCode(@PathVariable String confirmationCode){
-        try{
+    public ResponseEntity<?> getBookingByConfirmationCode(@PathVariable String confirmationCode) {
+        try {
             BookedRoom booking = bookingService.findByBookingConfirmationCode(confirmationCode);
             BookingResponse bookingResponse = getBookingResponse(booking);
             return ResponseEntity.ok(bookingResponse);
-        }catch(ResourceNotFoundException ex){
-             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+        } catch (ResourceNotFoundException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
 
         }
     }
 
     @PostMapping("/room/{roomId}/booking")
-    public ResponseEntity<?> saveBooking(@PathVariable Long roomId, @RequestBody BookedRoom bookingRequest){
+    public ResponseEntity<?> saveBooking(@PathVariable Long roomId, @RequestBody BookedRoom bookingRequest) {
         try {
             bookingRequest.calculateTotalNumberOfGuests();  // Ensure total number of guests is calculated
             System.out.println("Received booking request: " + bookingRequest); // Log the payload
@@ -63,25 +63,29 @@ public class BookingController {
         }
     }
 
-
+/*
     @DeleteMapping("/booking/{bookingId}/delete")
     public void cancelBooking(@PathVariable Long bookingId) {
         bookingService.cancelBooking(bookingId);
+    }*/
+
+    @DeleteMapping("/booking/{bookingId}/delete")
+    public ResponseEntity<?> cancelBooking(@PathVariable("id") Long id) {
+        try {
+            bookingService.cancelBooking(id);
+            return ResponseEntity.ok("Booking cancelled successfully.");
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error cancelling booking: " + e.getMessage());
+        }
     }
 
-    private BookingResponse getBookingResponse(BookedRoom booking){
+    private BookingResponse getBookingResponse(BookedRoom booking) {
         Room theRoom = roomService.getRoomById(booking.getRoom().getId()).get();
-        RoomResponse room = new RoomResponse(
-                theRoom.getId(),
-                theRoom.getRoomType(),
-                theRoom.getRoomPrice());
+        RoomResponse room = new RoomResponse(theRoom.getId(), theRoom.getRoomType(), theRoom.getRoomPrice());
 
-        return new BookingResponse(
-                booking.getBookingId(), booking.getCheckInDate(),
-                booking.getCheckOutDate(), booking.getGuestFullName(),
-                booking.getGuestEmail(), booking.getNumberOfAdults(),
-                booking.getNumberOfChildren(), booking.getTotalNumOfGuest(),
-                booking.getBookingConfirmationCode(),room);
+        return new BookingResponse(booking.getBookingId(), booking.getCheckInDate(), booking.getCheckOutDate(), booking.getGuestFullName(), booking.getGuestEmail(), booking.getNumberOfAdults(), booking.getNumberOfChildren(), booking.getTotalNumOfGuest(), booking.getBookingConfirmationCode(), room);
     }
 
 }

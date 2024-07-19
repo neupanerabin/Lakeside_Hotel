@@ -1,6 +1,7 @@
 package com.lakesidedemo.lakesideHotel.service;
 
 import com.lakesidedemo.lakesideHotel.exception.InvalidBookingRequestException;
+import com.lakesidedemo.lakesideHotel.exception.ResourceNotFoundException;
 import com.lakesidedemo.lakesideHotel.model.BookedRoom;
 import com.lakesidedemo.lakesideHotel.model.Room;
 import com.lakesidedemo.lakesideHotel.repository.BookingRepository;
@@ -8,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -43,12 +45,12 @@ public class BookingServiceImpl implements IBookingService {
         return bookingRequest.getBookingConfirmationCode();
     }
 
-
-
     @Override
     public BookedRoom findByBookingConfirmationCode(String confirmationCode) {
-        return bookingRepository.findByBookingConfirmationCode(confirmationCode);
+        return bookingRepository.findByBookingConfirmationCode(confirmationCode)
+                .orElseThrow(() -> new ResourceNotFoundException("No booking found with booking code : "+ confirmationCode));
     }
+
 
     @Override
     public List<BookedRoom> findByRoomId(Long roomId) {

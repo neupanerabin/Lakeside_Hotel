@@ -5,6 +5,7 @@ const FindBooking = () => {
     const [confirmationCode, setConfirmationCode] = useState("");
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const [successMessage, setSuccessMessage] = useState("");
     const [bookingInfo, setBookingInfo] = useState({
         id: "",
         room: { id: "" },
@@ -42,13 +43,12 @@ const FindBooking = () => {
     const handleFormSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
-        setError(""); // Clear previous errors
-        setIsDeleted(false); // Reset deletion status
-
         try {
             const data = await getBookingByConfirmationCode(confirmationCode);
+            console.log("Booking data fetched:", data); // Debug log
             setBookingInfo(data);
         } catch (error) {
+            console.error("Error fetching booking:", error); // Debug log
             setBookingInfo(clearBookingInfo);
             if (error.response && error.response.status === 404) {
                 setError(error.response.data.message);
@@ -60,21 +60,23 @@ const FindBooking = () => {
         }
     };
 
-    const handleBookingCancellation = async () => {
-        if (!bookingInfo.id) {
-            setError("No booking ID found for cancellation");
-            return;
-        }
-
+    const handleBookingCancellation = async (bookingInfo) => {
         try {
+            console.log("Attempting to cancel booking with ID:", bookingInfo.id); // Debug log
             await cancelBooking(bookingInfo.id);
             setIsDeleted(true);
+            setSuccessMessage("Booking has been cancelled successfully!");
             setBookingInfo(clearBookingInfo);
             setConfirmationCode("");
             setError("");
         } catch (error) {
-            setError(error.message);
+            console.error("Error cancelling booking:", error); // Debug log
+            setError(`Error cancelling booking: ${error.message}`);
         }
+        setTimeout(() => {
+            setSuccessMessage("");
+            setIsDeleted(false);
+        }, 2000);
     };
 
     return (
@@ -85,6 +87,7 @@ const FindBooking = () => {
                     <div className='input-group mb-3'>
                         <input
                             className='form-control'
+                            type='text'
                             id="confirmationCode"
                             name="confirmationCode"
                             value={confirmationCode}
@@ -103,6 +106,7 @@ const FindBooking = () => {
                         <h3>Booking Information</h3>
                         <p>Booking Confirmation Code: {bookingInfo.bookingConfirmationCode}</p>
                         <p>Room Number: {bookingInfo.room.id}</p>
+                        <p>Room Type: {bookingInfo.room.roomType}</p>
                         <p>Check-in Date: {bookingInfo.checkInDate}</p>
                         <p>Check-Out Date: {bookingInfo.checkOutDate}</p>
                         <p>Full Name: {bookingInfo.guestFullName}</p>
@@ -110,7 +114,6 @@ const FindBooking = () => {
                         <p>Adults: {bookingInfo.numberOfAdults}</p>
                         <p>Children: {bookingInfo.numberOfChildren}</p>
                         <p>Total Guests: {bookingInfo.totalNumOfGuest}</p>
-                        
                         {!isDeleted && (
                             <button className='btn btn-danger' onClick={handleBookingCancellation}>
                                 Cancel Booking
@@ -122,7 +125,7 @@ const FindBooking = () => {
                 )}
                 {isDeleted && (
                     <div className='alert alert-success mt-3' role='alert'>
-                        Booking has been cancelled successfully
+                        {successMessage}
                     </div>
                 )}
             </div>

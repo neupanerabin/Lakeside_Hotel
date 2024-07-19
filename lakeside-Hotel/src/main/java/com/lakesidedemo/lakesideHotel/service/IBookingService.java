@@ -3,6 +3,7 @@ package com.lakesidedemo.lakesideHotel.service;
 import com.lakesidedemo.lakesideHotel.model.BookedRoom;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IBookingService {
     List<BookedRoom> getAllBookings();
