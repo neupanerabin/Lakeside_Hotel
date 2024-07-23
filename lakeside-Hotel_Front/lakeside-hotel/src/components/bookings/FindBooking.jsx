@@ -24,7 +24,7 @@ const FindBooking = () => {
 
     const clearBookingInfo = {
         id: "",
-        room: { id: "" },
+        room: { id: ""},
         bookingConfirmationCode: "",
         roomNumber: "",
         checkInDate: "",
