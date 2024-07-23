@@ -2,8 +2,11 @@ package com.lakesidedemo.lakesideHotel.exception;
 
 
 /*
-* @author : rabin
-*/
+ * @author : rabin
+ */
 
-public class UserAlreadyExistsException {
+public class UserAlreadyExistsException extends RuntimeException {
+    public UserAlreadyExistsException(String message) {
+        super(message);
+    }
 }
