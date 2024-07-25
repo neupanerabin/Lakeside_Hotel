@@ -2,8 +2,11 @@ package com.lakesidedemo.lakesideHotel.exception;
 
 
 /*
-* @author : rabin
-*/
+ * @author : rabin
+ */
 
-public class RoleAlreadyExistException {
+public class RoleAlreadyExistException extends RuntimeException {
+    public RoleAlreadyExistException(String message) {
+        super(message);
+    }
 }

@@ -15,7 +15,6 @@ import java.util.List;
 
 /**
  * Entity class representing a Role.
- *
  * This class is annotated with JPA annotations to map it to a database table.
  * It also uses Lombok annotations to generate getters, setters, and a no-argument constructor.
  */
@@ -32,6 +31,10 @@ public class Role {
 
     // Name of the role
     private String name;
+
+    public Role(String name) {
+        this.name = name;
+    }
 
     // Many-to-many relationship with User
     @ManyToMany(mappedBy = "roles")
