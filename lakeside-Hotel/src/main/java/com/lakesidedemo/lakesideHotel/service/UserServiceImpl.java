@@ -75,19 +75,23 @@ public class UserServiceImpl implements IUserService {
     @Transactional
     @Override
     public void deleteUser(String email) {
-        userRepository.deleteByEmail(email);
+        User theUser = getUser(email);
+        if(theUser != null) {
+            userRepository.deleteByEmail(email);
+        }
     }
 
     /**
-     * Retrieves a user by email.
+     * Retrieves a user by their email.
      *
      * @param email The email of the user to retrieve.
-     * @return The user with the given email.
+     * @return The User object if found.
      * @throws UsernameNotFoundException if no user is found with the given email.
      */
     @Override
     public User getUser(String email) {
-        return userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        return userRepository.findByEmail(email)  // Find the user by email using the user repository
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));  // Throw exception if user not found
     }
+
 }
