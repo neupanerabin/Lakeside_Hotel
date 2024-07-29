@@ -20,6 +20,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+
+
+
 /**
  * JwtAuthEntryPoint is used to handle unauthorized access attempts.
  * It implements the AuthenticationEntryPoint interface and provides a custom response for unauthorized requests.
@@ -46,7 +49,7 @@ public class JwtAuthEntryPoint implements AuthenticationEntryPoint {
     public void commence(HttpServletRequest request, HttpServletResponse response,
                          AuthenticationException authException) throws IOException, ServletException {
         // Log the unauthorized access attempt with the request URI
-        logger.error("Unauthorized error: {}. Path: {}", authException.getMessage(), request.getRequestURI());
+//        logger.error("Unauthorized error: {} Path: {}", authException.getMessage(), request.getRequestURI());
 
         // Set the response content type to JSON
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
@@ -61,6 +64,8 @@ public class JwtAuthEntryPoint implements AuthenticationEntryPoint {
         body.put("path", request.getServletPath());
 
         // Write the response body as JSON using ObjectMapper
+        final ObjectMapper mapper = new ObjectMapper();
         mapper.writeValue(response.getOutputStream(), body);
     }
+
 }

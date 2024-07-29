@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component;
 import java.security.Key;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author : rabin
@@ -23,14 +22,15 @@ import java.util.stream.Collectors;
  */
 @Component
 public class JwtUtils {
+    // Logger for logging events related to JWT operations
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
     // Secret key for signing the JWT, injected from application properties
-    @Value("${security.jwt.secret}")
+    @Value("${auth.token.jwtSecret}")
     private String jwtSecret;
 
     // JWT expiration time, injected from application properties
-    @Value("${security.jwt.jwtExpirationTime}")
+    @Value("${auth.token.expirationInMils}")
     private int jwtExpirationTime;
 
     /**
@@ -40,12 +40,15 @@ public class JwtUtils {
      * @return The generated JWT token as a string.
      */
     public String generateJwtTokenForUser(Authentication authentication) {
+        // Extract user details from the authentication object
         HotelUserDetails userPrincipal = (HotelUserDetails) authentication.getPrincipal();
+
+        // Extract roles from the user details
         List<String> roles = userPrincipal.getAuthorities()
                 .stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.toList());
+                .map(GrantedAuthority::getAuthority).toList();
 
+        // Build and return the JWT token
         return Jwts.builder()
                 .setSubject(userPrincipal.getUsername())
                 .claim("roles", roles)
@@ -87,17 +90,23 @@ public class JwtUtils {
      */
     public boolean validateToken(String token) {
         try {
+            // Parse the token to validate it
             Jwts.parserBuilder().setSigningKey(key()).build().parse(token);
             return true;
         } catch (MalformedJwtException e) {
+            // Log error if the token is malformed
             logger.error("Invalid JWT token: {}", e.getMessage());
         } catch (ExpiredJwtException e) {
+            // Log error if the token is expired
             logger.error("Expired JWT token: {}", e.getMessage());
         } catch (UnsupportedJwtException e) {
+            // Log error if the token is unsupported
             logger.error("Unsupported JWT token: {}", e.getMessage());
         } catch (IllegalArgumentException e) {
+            // Log error if the token claims string is empty
             logger.error("JWT claims string is empty: {}", e.getMessage());
         }
+        // Return false if token validation fails
         return false;
     }
 }
