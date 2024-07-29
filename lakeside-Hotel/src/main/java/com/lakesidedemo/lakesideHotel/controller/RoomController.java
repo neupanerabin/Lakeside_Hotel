@@ -26,8 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-// Allow cross-origin requests from the specified origin
-@CrossOrigin(origins = "http://localhost:5173")
 
 // Define this class as a REST controller
 @RestController

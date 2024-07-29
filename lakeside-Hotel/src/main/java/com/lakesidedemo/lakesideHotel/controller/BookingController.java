@@ -20,7 +20,6 @@ import java.util.List;
  * @author Rabin
  * */
 
-@CrossOrigin(origins = "http://localhost:5173")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/bookings")
