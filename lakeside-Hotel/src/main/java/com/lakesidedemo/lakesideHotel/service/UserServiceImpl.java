@@ -11,9 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /*
  * @author : rabin
@@ -41,19 +39,16 @@ public class UserServiceImpl implements IUserService {
      * @return The registered user.
      * @throws UserAlreadyExistsException if a user with the same email already exists.
      */
+
     @Override
     public User registerUser(User user) {
-        // Check if a user with the given email already exists
-        if(userRepository.existsByEmail(user.getEmail())) {
+        if (userRepository.existsByEmail(user.getEmail())){
             throw new UserAlreadyExistsException(user.getEmail() + " already exists");
         }
-        // Encode the user's password before saving
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        // Assign the default role to the user
-        Role userRole = roleRepository.findByName("ROLE_USER").get();
-        user.setRoles(Collections.singleton(userRole));
-
-        // Save and return the registered user
+        System.out.println(user.getPassword());
+        Role userRole = roleRepository.findByName("ROLE_USER");
+        user.setRoles(Collections.singletonList(userRole));
         return userRepository.save(user);
     }
 

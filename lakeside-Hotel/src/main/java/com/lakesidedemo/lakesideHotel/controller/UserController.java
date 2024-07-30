@@ -5,6 +5,7 @@ import com.lakesidedemo.lakesideHotel.service.IUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,6 +38,7 @@ public class UserController {
      * @return A response entity containing a list of all users and the HTTP status.
      */
     @GetMapping("/all")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<List<User>> getUsers() {
         return new ResponseEntity<>(userService.getUsers(), HttpStatus.FOUND);
     }
@@ -48,6 +50,7 @@ public class UserController {
      * @return A response entity containing the user and the HTTP status, or an error message if not found.
      */
     @GetMapping("/{email}")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> getUserByEmail(@PathVariable("email") String email) {
         try {
             // Fetch the user by email
@@ -69,6 +72,7 @@ public class UserController {
      * @return A response entity containing a success message or an error message if the user is not found.
      */
     @GetMapping("/delete/{userId}")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or (hasRole('ROLE_USER') and #email == principal.username)")
     public ResponseEntity<String> deleteUser(@PathVariable("userId") String email) {
         try {
             // Delete the user by email

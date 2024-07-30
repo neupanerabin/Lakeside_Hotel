@@ -75,9 +75,13 @@ public class RoleServiceImpl implements IRoleService {
      * @param name The name of the role to find.
      * @return The Role object if found.
      */
+//    @Override
+//    public Role findByName(String name) {
+//        return roleRepository.findByName(name).orElseThrow(() -> new RuntimeException("Role not found"));
+//    }
     @Override
     public Role findByName(String name) {
-        return roleRepository.findByName(name).orElseThrow(() -> new RuntimeException("Role not found"));
+        return roleRepository.findByName(name);
     }
 
     /**
