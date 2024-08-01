@@ -13,14 +13,14 @@ export const NavBar = () => {
         setShowAccount(!showAccount)
     }
 
-    const isLoggedIn = user !== null
+    const isLoggedIn = localStorage.getItem("token")
     const userRole = localStorage.getItem("userRole")
 
     return (
 
         <nav className="navbar navbar-expand-lg bg-body-teritary px-5 shadow mt-5 sticky-top">
             <div className="container-fluid">
-                <Link to={""}>
+                <Link to={"/"}>
                     <span className="hotel-color">
                         lakeSide Hotel
                     </span>

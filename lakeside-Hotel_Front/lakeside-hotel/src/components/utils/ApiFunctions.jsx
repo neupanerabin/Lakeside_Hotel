@@ -22,7 +22,9 @@ export async function addRoom(photo, roomType, roomPrice) {
 
     try {
         // Make a POST request to add a new room
-        const response = await api.post("/rooms/add/new-room", formData);
+        const response = await api.post("/rooms/add/new-room", formData, {
+            headers: getHeader()
+        });
         // Return true if the request was successful
         return response.status === 200;
     } catch (error) {
@@ -57,7 +59,9 @@ export async function getAllrooms() {
 export async function deleteRoom(roomId) {
     try {
         // Make a DELETE request to delete a room
-        const result = await api.delete(`rooms/delete/room/${roomId}`);
+        const result = await api.delete(`rooms/delete/room/${roomId}`,{
+            headers: getHeader()
+        })
         return result.data;
     } catch (error) {
         throw new Error(`Error deleting room ${error.message}`);
@@ -166,7 +170,7 @@ export async function registerUser(registration) {
     }
 }
 
-// 
+// This function login a register user
 export async function loginUser(login) {
     try {
         const response = await api.post("auth/login", login)
@@ -176,7 +180,6 @@ export async function loginUser(login) {
             return null
         }
     } catch (error){
-        console.error(error)
         return null
     }
 }
@@ -205,7 +208,7 @@ export async function deleteUser(userId){
     }
 }
 
-//
+// This function to get a single user
 export async function getUser(userId, token){
     try{
         const response = await api.get(`/users/${userId}`,{

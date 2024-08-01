@@ -12,18 +12,25 @@ export const AuthProvider = ({ children }) => {
 
     const handleLogin = (token) => {
         try {
-            console.log("Token received:", token); // Add this line
+            console.log("Token received:", token); // Log the token
             const decodedUser = jwt_decode(token);
-            console.log("Decoded user:", decodedUser); // Debugging line
+            console.log("Decoded user:", decodedUser); // Log the decoded user
             localStorage.setItem("userId", decodedUser.sub);
-            localStorage.setItem("userRole", decodedUser.role); // Adjust this if the role is different
+            localStorage.setItem("userRole", decodedUser.role);
             localStorage.setItem("token", token);
             setUser(decodedUser);
         } catch (error) {
             console.error("Failed to decode token", error);
+            try {
+                const decodedUser = manualDecode(token);
+                console.log("Manually Decoded User:", decodedUser);
+                // Store user and token...
+            } catch (manualError) {
+                console.error("Manual decode also failed", manualError);
+            }
         }
     };
-    
+        
 
     const handleLogout = () => {
         localStorage.removeItem("userId");

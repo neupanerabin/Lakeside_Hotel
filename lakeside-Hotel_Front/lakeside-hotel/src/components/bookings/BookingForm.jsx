@@ -12,7 +12,7 @@ const BookingForm = () => {
     const [roomPrice, setRoomPrice] = useState(0);
     const [booking, setBooking] = useState({
         guestFullName: "",
-        guestEmail: "",
+        guestEmail: "currentUser",
         checkInDate: "",
         checkOutDate: "",
         numberOfAdults: "",
