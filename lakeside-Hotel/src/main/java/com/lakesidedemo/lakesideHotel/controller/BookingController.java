@@ -130,10 +130,8 @@ public class BookingController {
      */
     @DeleteMapping("/booking/{bookingId}/delete")
     // Maps HTTP DELETE requests to /bookings/booking/{bookingId}/delete to this method.
-
     public ResponseEntity<?> cancelBooking(@PathVariable Long bookingId) {
         // Method to cancel a booking.
-
         try {
             bookingService.cancelBooking(bookingId);
             // Cancels the booking using the booking service.
