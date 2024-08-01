@@ -1,10 +1,5 @@
-import React, { createContext, useState } from 'react';
-
-// Helper function to require the jwt-decode module
-const loadJwtDecode = () => {
-    const jwtDecode = require("jwt-decode");
-    return jwtDecode.default || jwtDecode;
-};
+import React, { createContext, useState, useContext } from "react";
+import jwt_decode from 'jwt-decode';
 
 export const AuthContext = createContext({
     user: null,
@@ -12,22 +7,23 @@ export const AuthContext = createContext({
     handleLogout: () => {}
 });
 
-const AuthProvider = ({ children }) => {
+export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
 
     const handleLogin = (token) => {
         try {
-            const jwt_decode = loadJwtDecode();
-            const decodedToken = jwt_decode(token);
-            localStorage.setItem("userId", decodedToken.sub);
-            localStorage.setItem("userRole", decodedToken.role);
+            console.log("Token received:", token); // Add this line
+            const decodedUser = jwt_decode(token);
+            console.log("Decoded user:", decodedUser); // Debugging line
+            localStorage.setItem("userId", decodedUser.sub);
+            localStorage.setItem("userRole", decodedUser.role); // Adjust this if the role is different
             localStorage.setItem("token", token);
-            setUser(decodedToken);
+            setUser(decodedUser);
         } catch (error) {
             console.error("Failed to decode token", error);
-            // Handle token decoding errors here
         }
     };
+    
 
     const handleLogout = () => {
         localStorage.removeItem("userId");
@@ -43,4 +39,6 @@ const AuthProvider = ({ children }) => {
     );
 };
 
-export default AuthProvider;
+export const useAuth = () => {
+    return useContext(AuthContext);
+};

@@ -19,7 +19,8 @@ import FindBooking from './components/bookings/FindBooking.jsx';
 import Login from './components/auth/Login.jsx';
 import Registration from './components/auth/Registration.jsx';
 import Profile from './components/auth/Profile.jsx';
-import AuthProvider from './components/auth/AuthProvider.jsx';
+// import AuthProvider from './components/auth/AuthProvider.jsx';
+import { AuthProvider } from './components/auth/AuthProvider.jsx';
 import Logout from './components/auth/Logout.jsx';
 
 
