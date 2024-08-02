@@ -1,13 +1,11 @@
 import React, { useContext, useState } from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import Logout from '../auth/Logout'
-import { AuthContext } from '../auth/AuthProvider'
-
 
 export const NavBar = () => {
     const [showAccount, setShowAccount] = useState(false)
 
-    const { user } = useContext(AuthContext)
+    // const { user } = useContext(AuthContext)
 
     const handleAccountClick = () => {
         setShowAccount(!showAccount)
@@ -34,7 +32,7 @@ export const NavBar = () => {
                     aria-controls='navbarScroll'
                     aria-expanded="false"
                     aria-label='Toggle navigation'>
-                    <span className='navbar-toggle-icon'></span>
+                    <span className='navbar-toggler-icon'></span>
                 </button>
 
                 <div className="collapse navbar-collapse" id="navbarScroll">
