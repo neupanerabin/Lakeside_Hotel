@@ -69,8 +69,7 @@ const RoomSearch = () => {
       roomType: ""
     });
     setAvailableRooms([]);
-    setIsSearched(false);
-  };
+  }
 
   return (
     <>
@@ -120,7 +119,7 @@ const RoomSearch = () => {
 
         {isLoading ? (
           <p>Finding available rooms...</p>
-        ) : isSearched && availableRooms.length > 0 ? (
+        ) : availableRooms ? (
           <RoomSearchResults
             results={availableRooms}
             onClearSearch={clearSearch}

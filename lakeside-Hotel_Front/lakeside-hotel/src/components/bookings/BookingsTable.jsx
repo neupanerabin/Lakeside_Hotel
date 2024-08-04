@@ -12,7 +12,9 @@ const BookingsTable = ({ bookingInfo, handleBookingCancellation }) => {
       filtered = bookingInfo.filter((booking) => {
         const bookingStartDate = parseISO(booking.checkInDate)
         const bookingEndDate = parseISO(booking.checkOutDate)
-        return bookingStartDate >= startDate && bookingEndDate <= endDate && bookingEndDate > startDate
+        return (
+          bookingStartDate >= startDate && bookingEndDate <= endDate && bookingEndDate > startDate
+        )
 
       })
 
@@ -52,7 +54,7 @@ const BookingsTable = ({ bookingInfo, handleBookingCancellation }) => {
           {filteredBookings.map((booking, index) => (
             <tr key={booking.Id}>
               <td>{index + 1}</td>
-              <td>{booking.bookingId}</td>
+              <td>{booking.id}</td>
               <td>{booking.room.id}</td>
               <td>{booking.room.roomType}</td>
               <td>{booking.room.roomType}</td>

@@ -29,9 +29,10 @@ export const RoomTypeSelector = ({ handleRoomInputChange, newRoom }) => {
             {roomTypes.length > 0 && (
                 <div>
                     <select
-                        id='roomType'
+                    
+                        required
+                        className='form-select'
                         name='roomType'
-                        value={newRoom.roomType}
                         onChange={(e) => {
                             setNewRoomType(e.target.value)
                             console.log(newRoom.roomType)
@@ -40,7 +41,7 @@ export const RoomTypeSelector = ({ handleRoomInputChange, newRoom }) => {
                             } else {
                                 handleRoomInputChange(e)
                             }
-                        }}>
+                        }}value={newRoom.roomType}>
                         <option value={""}>Select a room type</option>
                         <option value={"Add New"}> Add New</option>
                         {roomTypes.map((type, index) => (

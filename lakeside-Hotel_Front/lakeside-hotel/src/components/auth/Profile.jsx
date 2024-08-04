@@ -34,7 +34,8 @@ const Profile = () => {
 				const userData = await getUser(userId, token)
 				setUser(userData)
 			} catch (error) {
-				console.error(error)
+				const errors = error
+				console.log(errors)
 			}
 		}
 

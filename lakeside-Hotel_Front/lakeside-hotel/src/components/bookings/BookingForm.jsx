@@ -2,14 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { bookRoom, getRoomById } from '../utils/ApiFunctions'; // Corrected function name
 import { useNavigate, useParams } from 'react-router';
 import moment from "moment"; // Corrected import
-import { Form } from 'react-bootstrap';
+import { Form, FormControl, Button } from 'react-bootstrap';
 import BookingSummary from './BookingSummary';
+import { useAuth } from "../auth/AuthProvider"
 
 const BookingForm = () => {
-    const [isValidated, setIsValidated] = useState(false);
+    const [validated, setValidated] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [roomPrice, setRoomPrice] = useState(0);
+    
+    const currentUser = localStorage.getItem("userId")
+
     const [booking, setBooking] = useState({
         guestFullName: "",
         guestEmail: "currentUser",
@@ -49,15 +53,15 @@ const BookingForm = () => {
         const checkInDate = moment(booking.checkInDate);
         const checkOutDate = moment(booking.checkOutDate);
         const diffInDays = checkOutDate.diff(checkInDate, 'days');
-        const price = roomPrice ? roomPrice : 0;
-        return diffInDays * price;
+        const paymentPerDay = roomPrice ? roomPrice : 0;
+        return diffInDays * paymentPerDay;
     };
 
     const isGuestCountValid = () => {
         const adultCount = parseInt(booking.numberOfAdults);
         const childrenCount = parseInt(booking.numberOfChildren);
         const totalCount = adultCount + childrenCount;
-        return totalCount >= 1 && adultCount >= 1;
+        return totalCount >= 1 && adultCount >= 1
     };
 
     const isCheckOutDateValid = () => {
@@ -78,17 +82,17 @@ const BookingForm = () => {
         } else {
             setIsSubmitted(true);
         }
-        setIsValidated(true);
+        setValidated(true);
     };
 
-    const handleBooking = async () => {
+    const handleFormSubmit = async () => {
         try {
             const confirmationCode = await bookRoom(roomId, booking);
             setIsSubmitted(true);
             navigate("/booking-success", { state: { message: confirmationCode } }); // Removed extra space
         } catch (error) {
-            setErrorMessage(error.message);
-            setErrorMessage("Booking failed. Please try again later.");
+            const errorMessage = error.message
+            console.log(errorMessage)
             navigate("/booking-success", { state: { error: errorMessage } });
         }
     };
@@ -100,9 +104,9 @@ const BookingForm = () => {
                     <div className='col-md-6'>
                         <div className='card card-body mt-4'>
                             <h4 className='card-title'>Reserved Room</h4>
-                            <Form noValidate validated={isValidated} onSubmit={handleSubmit}>
+                            <Form noValidate validated={validated} onSubmit={handleSubmit}>
                                 <Form.Group>
-                                    <Form.Label htmlFor="guestFullName">Full Name: </Form.Label>
+                                    <Form.Label htmlFor="guestFullName" className='hotel-color'>Full Name: </Form.Label>
                                     <Form.Control
                                         required
                                         type="text"
@@ -215,8 +219,8 @@ const BookingForm = () => {
                             <BookingSummary
                                 booking={booking}
                                 payment={calculatePayment()} // Calculated payment instead of function
-                                isFormValid={isValidated}
-                                onConfirm={handleBooking}
+                                isFormValid={validated}
+                                onConfirm={handleFormSubmit}
                             />
                         )}
                     </div>

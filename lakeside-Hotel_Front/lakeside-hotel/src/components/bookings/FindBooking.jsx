@@ -4,7 +4,7 @@ import { cancelBooking, getBookingByConfirmationCode } from '../utils/ApiFunctio
 
 const FindBooking = () => {
     const [confirmationCode, setConfirmationCode] = useState("");
-    const [error, setError] = useState("");
+    const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [successMessage, setSuccessMessage] = useState("");
     const [bookingInfo, setBookingInfo] = useState({
@@ -37,12 +37,12 @@ const FindBooking = () => {
         totalNumOfGuest: ""
     };
 
-    const handleInputChange = (e) => {
-        setConfirmationCode(e.target.value);
+    const handleInputChange = (event) => {
+        setConfirmationCode(event.target.value);
     };
 
-    const handleFormSubmit = async (e) => {
-        e.preventDefault();
+    const handleFormSubmit = async (event) => {
+        event.preventDefault();
         setIsLoading(true);
         try {
             const data = await getBookingByConfirmationCode(confirmationCode);
@@ -85,7 +85,7 @@ const FindBooking = () => {
     return (
         <>
             <div className='container mt-5 d-flex flex-column justify-content-center align-items-center'>
-                <h2>Find My Booking</h2>
+                <h2 className='text-center mb-4'>Find My Booking</h2>
                 <form onSubmit={handleFormSubmit} className='col-md-6'>
                     <div className='input-group mb-3'>
                         <input
@@ -100,6 +100,7 @@ const FindBooking = () => {
                         <button className='btn btn-hotel input-group-text' type="submit">Find Booking</button>
                     </div>
                 </form>
+                
                 {isLoading ? (
                     <div>Finding your Booking...</div>
                 ) : error ? (

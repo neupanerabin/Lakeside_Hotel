@@ -28,7 +28,7 @@ const Checkout = () => {
   return (
     <div>
       <section className='container'>
-        <div className='row flex-column flex-md-row align-items-center'>
+        <div className='row'>
           <div className='col-md-4 mt-5 mb-5'>
             {isLoading ? (
               <p>Loading room information...</p>

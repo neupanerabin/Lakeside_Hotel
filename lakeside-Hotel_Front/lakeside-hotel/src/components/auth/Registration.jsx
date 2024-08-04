@@ -26,7 +26,7 @@ const Registration = () => {
 
         } catch (error) {
             setSuccessMessage("")
-            setErrorMessage(`Registration error : ${error, message}`)
+            setErrorMessage(`Registration error : ${error.message}`)
         }
         setTimeout(() => {
             setErrorMessage("")
@@ -46,7 +46,7 @@ const Registration = () => {
                 <div className='row mb-3'>
                     <label htmlFor="firstName" className='col-sm-2 col-form-label'>First Name </label>
                     <div className='col-sm-10'>
-                        <input type="firstName"
+                        <input type="text"
                             id='firstName'
                             name='firstName'
                             className='form-control'
@@ -58,7 +58,7 @@ const Registration = () => {
                 <div className='row mb-3'>
                     <label htmlFor="lastName" className='col-sm-2 col-form-label'>Last Name </label>
                     <div className='col-sm-10'>
-                        <input type="lastName"
+                        <input type="text"
                             id='lastName'
                             name='lastName'
                             className='form-control'

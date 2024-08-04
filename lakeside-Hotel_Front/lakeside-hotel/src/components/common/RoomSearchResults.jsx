@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Row } from 'react-bootstrap';
+import RoomCard from '../room/RoomCard';
+import RoomPaginator from './RoomPaginator';
 
 // The RoomSearchResults component receives results and onClearSearch as props
 const RoomSearchResults = ({ results, onClearSearch }) => {
@@ -19,7 +21,7 @@ const RoomSearchResults = ({ results, onClearSearch }) => {
   // Calculate the start and end indices for the current page's results
   const startIndex = (currentPage - 1) * resultPerPage;
   const endIndex = startIndex + resultPerPage;
-  const paginatedResult = results.slice(startIndex, endIndex);
+  const paginatedResults = results.slice(startIndex, endIndex);
 
   return (
     <>
@@ -27,7 +29,7 @@ const RoomSearchResults = ({ results, onClearSearch }) => {
         <>
           <h5 className='text-center mt-5'>Search Results</h5>
           <Row>
-            {paginatedResult.map((room) => (
+            {paginatedResults.map((room) => (
               // RoomCard component to display individual room details
               <RoomCard key={room.id} room={room} />
             ))}

@@ -8,8 +8,6 @@ const MainHeader = () => {
         <h1>Welcome to <span className='hotel-color'>lakeSide Hotel</span></h1>
         <h4>Experience the Best Hospitality in town</h4>
 
-
-
       </div>
 
     </header>

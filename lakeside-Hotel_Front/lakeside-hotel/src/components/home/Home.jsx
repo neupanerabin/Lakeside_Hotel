@@ -17,14 +17,14 @@ const currentUser = localStorage.getItem("userId")
       {message && <p className='text-warning px-5'>{message}</p>}
       {currentUser && <h6 className='text-success text-center'>You are Logged-In as{currentUser}</h6>}
       <MainHeader/>
-      <section className='container'>
+      <div className='container'>
         <RoomSearch/>
         <RoomCarousel/>
         <Parallax/>
         <RoomCarousel/>
         <HotelService></HotelService>
         <Parallax/>
-      </section>
+      </div>
     </section>
   )
 }

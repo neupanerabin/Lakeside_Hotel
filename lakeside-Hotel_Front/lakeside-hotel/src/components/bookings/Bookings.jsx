@@ -10,15 +10,15 @@ const Bookings = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      getAllBookings().
-      then((data) => {
-        setBookingInfo(data)
-        setIsLoading(false)
+      getAllBookings()
+        .then((data) => {
+          setBookingInfo(data)
+          setIsLoading(false)
 
-      }).catch((error) => {
-        setError(error.message)
-        setIsLoading(false)
-      })
+        }).catch((error) => {
+          setError(error.message)
+          setIsLoading(false)
+        })
     }, 1000)
   }, [])
 

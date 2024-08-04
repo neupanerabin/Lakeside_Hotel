@@ -1,22 +1,19 @@
 import React, { useContext } from 'react'
 import { AuthContext } from './AuthProvider'
-import { Navigate, useNavigate } from 'react-router'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const Logout = () => {
     const auth = useContext(AuthContext)
-    const navigate = useNavigate
+    const navigate = useNavigate()
 
     const handleLogout =() =>{
         auth.handleLogout()
-        window.location.reload()
         navigate("/", {state: {message: "You have been logged out! "}})
         
     }
 
-    const isLoggedIn = auth.user !== null 
 
-  return isLoggedIn ? (
+  return (
     <>
     <li>
         <Link className='dropdown-item' to={"/profile"}> Profile </Link>
@@ -28,7 +25,7 @@ const Logout = () => {
     
     </>
     
-  ): null
+  )
 }
 
 export default Logout
