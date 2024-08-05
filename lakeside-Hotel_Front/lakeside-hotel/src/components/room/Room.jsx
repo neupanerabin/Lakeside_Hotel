@@ -12,7 +12,7 @@ const Room = () => {
     const [isLoading, setIsLoading] = useState(false)
     const [currentPage, setCurrentPage] = useState(1)
     const [roomsPerPage] = useState(6)
-    const [filteredData, setFilteredData] = useState([{ id: "" }])
+    const [filteredData, setFilteredData] = useState([])
 
     useEffect(() => {
         setIsLoading(true);
@@ -62,7 +62,7 @@ const Room = () => {
                     />
                 </Col>
             </Row>
-            <Row> {renderRooms()}
+            <Row> {renderRooms()}</Row>
 
                 <Row>
                     <Col md={6} className='d-flex align-items-center justify-content-end'>
@@ -72,7 +72,6 @@ const Room = () => {
                             onPageChange={handlePageChange}
                         />
                     </Col>
-                </Row>
             </Row>
         </Container>
     )

@@ -173,14 +173,15 @@ export async function registerUser(registration) {
 // This function login a register user
 export async function loginUser(login) {
     try {
-        const response = await api.post("auth/login", login)
+        const response = await api.post("/auth/login", login);
         if (response.status >= 200 && response.status < 300) {
-            return response.data
+            return response.data;
         } else {
-            return null
+            throw new Error("Login failed");
         }
-    } catch (error){
-        return null
+    } catch (error) {
+        console.error("Login error:", error);
+        return null;
     }
 }
 

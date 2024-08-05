@@ -28,7 +28,7 @@ const ExistingRooms = () => {
       setFilteredRooms(result);
       setIsLoading(false);
     } catch (error) {
-      setErrorMessage(error.response ? error.response.data.message : error.message);
+      setErrorMessage(error.message)
       setIsLoading(false);
     }
   };
@@ -52,9 +52,9 @@ const ExistingRooms = () => {
       const result = await deleteRoom(roomId);
       if (result === "") {
         setSuccessMessage(`Room No ${roomId} was deleted successfully`);
-        fetchRooms();
+        fetchRooms()
       } else {
-        setErrorMessage(`Error deleting room: ${result.message}`);
+        setErrorMessage(`Error deleting room: ${result.message}`)
       }
     } catch (error) {
       setErrorMessage(error.response ? error.response.data.message : error.message);

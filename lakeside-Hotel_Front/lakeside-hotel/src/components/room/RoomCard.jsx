@@ -7,7 +7,7 @@ const RoomCard = ({ room }) => {
         <Col key={room.id} className='mb-4' xs={12}>
             <Card>
                 <Card.Body className='d-flex flex-wra p align-items-center'>
-                    <div className='flex-shrink-0 mr-3 mb-3  mb-md-0'>
+                    <div className='flex-shrrink-0 mr-3 mb-3  mb-md-0'>
 
                     <Link to={`/book-room/${room.id}`} >
 

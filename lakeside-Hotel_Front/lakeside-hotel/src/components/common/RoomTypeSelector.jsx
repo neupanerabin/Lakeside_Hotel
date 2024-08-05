@@ -30,7 +30,6 @@ export const RoomTypeSelector = ({ handleRoomInputChange, newRoom }) => {
                 <div>
                     <select
                     
-                        required
                         className='form-select'
                         name='roomType'
                         onChange={(e) => {
